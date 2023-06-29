@@ -1,0 +1,456 @@
+<div class="page-wrapper uk-padding-small">
+  <app-breadcrumb [location]="'Manage Voters'"></app-breadcrumb>
+
+  <header class="header uk-margin-small-bottom">
+    <h4>Users List</h4>
+  </header>
+
+  <div class="mat-elevation-z1">
+    <div class="table-header uk-padding-small">
+      <div class="table-header-container">
+        <div class="left-table-header">
+          <!-- <a
+            class="uk-button uk-button-primary"
+            href="#modal-sections"
+            uk-toggle
+            >Add Voter</a
+          > -->
+        </div>
+        <div class="">
+          <form class="uk-search uk-search-default">
+            <span class="uk-search-icon-flip" uk-search-icon></span>
+            <input
+              class="uk-search-input"
+              type="search"
+              placeholder="Search"
+              (keyup)="searchFilter($event)"
+            />
+          </form>
+          <button
+            class="uk-button uk-button-default uk-margin-small-left"
+            type="button"
+          >
+            Filter
+          </button>
+          <div uk-dropdown class="">
+            <ul class="uk-nav uk-dropdown-nav">
+              <li>
+                <a (click)="filter('')">All</a>
+              </li>
+              <li>
+                <a (click)="filter('approved')">Approve</a>
+              </li>
+              <li>
+                <a (click)="filter('pending')">Pending</a>
+              </li>
+              <li>
+                <a (click)="filter('rejected')">Reject</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="announceSortChange($event)"
+    >
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by number"
+        >
+          Name
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by name"
+        >
+          Username
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="weight">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by weight"
+        >
+          Sr Code
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.srCode }}
+        </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let element">
+          <select
+            #status
+            class="uk-select uk-width-1-2"
+            [value]="element.accStatus"
+            (change)="updateStatus(status.value, element)"
+            [disabled]="element.accStatus == 'approved'"
+          >
+            <option value="approved">Approve</option>
+            <option value="pending">Pending</option>
+            <option value="rejected">Reject</option>
+          </select>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="buttons" style="display: flex">
+            <!-- <a
+              type="button"
+              class="uk-button uk-button-primary uk-margin-small-right"
+              style="padding-inline: 1em"
+              href="#update-modal"
+              uk-toggle
+              (click)="selectData(element)"
+            >
+              <span uk-icon="icon: pencil; ratio: 1"></span>
+            </a> -->
+            <button
+              type="button"
+              class="uk-button uk-button-danger"
+              style="padding-inline: 1em"
+              (click)="deleteVoter(element)"
+            >
+              <span uk-icon="icon: trash; ratio: 1"></span>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      [length]="dataSource.data.length"
+      [pageIndex]="0"
+      [pageSize]="5"
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
+
+  <div class="spinner" *ngIf="isLoading">
+    <span uk-spinner="ratio: 3"></span>
+  </div>
+</div>
+
+<!-- <div id="modal-sections" uk-modal>
+  <div class="uk-modal-dialog">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div class="uk-modal-header">
+      <h4>Add New Voter</h4>
+    </div>
+    <div class="uk-modal-body">
+      <form [formGroup]="votersForm">
+        <fieldset class="uk-fieldset">
+          <div class="uk-margin">
+            <label for="firstName">Firstname</label>
+
+            <input
+              class="uk-input"
+              type="text"
+              id="firstName"
+              name="firstName"
+              formControlName="firstName"
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                votersForm.controls['firstName'].hasError('required') &&
+                votersForm.controls['firstName'].touched
+              "
+              >Firstname field is required
+            </small>
+          </div>
+          <div class="uk-margin">
+            <label for="lastName">Lastname</label>
+
+            <input
+              class="uk-input"
+              type="text"
+              id="lastName"
+              name="lastName"
+              formControlName="lastName"
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                votersForm.controls['lastName'].hasError('required') &&
+                votersForm.controls['lastName'].touched
+              "
+              >Lastname field is required
+            </small>
+          </div>
+          <div class="uk-margin">
+            <label for="position">Photo</label>
+
+         
+            <div uk-form-custom="target: true">
+              <input
+                type="file"
+                (change)="fileChange($event)"
+                formControlName="file"
+              />
+              <input
+                class="uk-input uk-margin-small-left uk-form-width-medium"
+                type="text"
+                placeholder="Select file"
+                disabled
+              />
+            </div>
+           
+            <small
+              *ngIf="
+                votersForm.controls['file'].hasError('required') &&
+                votersForm.controls['file'].touched
+              "
+              >Please upload a file.</small
+            >
+            <small class="text-danger" *ngIf="!isFileValid"
+              >Invalid file. Must be (jpeg or png)</small
+            >
+          </div>
+          <div class="uk-margin">
+            <label for="email">Contact Number</label>
+
+            <input
+              class="uk-input"
+              type="text"
+              id="contactNumber"
+              name="contactNumber"
+              formControlName="contactNumber"
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                votersForm.controls['contactNumber'].hasError('required') &&
+                votersForm.controls['contactNumber'].touched
+              "
+              >Email field is required
+            </small>
+          </div>
+          <div class="uk-margin">
+            <label for="email">Email</label>
+
+            <input
+              class="uk-input"
+              type="email"
+              id="email"
+              name="email"
+              formControlName="email"
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                votersForm.controls['email'].hasError('required') &&
+                votersForm.controls['email'].touched
+              "
+              >Email field is required
+            </small>
+          </div>
+
+          <div class="uk-margin">
+            <label for="password">Voter's Password</label>
+
+            <input
+              class="uk-input"
+              type="password"
+              id="password"
+              name="password"
+              formControlName="password"
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                votersForm.controls['password'].hasError('required') &&
+                votersForm.controls['password'].touched
+              "
+              >Password field is required
+            </small>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div class="uk-modal-footer uk-text-right">
+      <button class="uk-button uk-button-default uk-modal-close" type="button">
+        Cancel
+      </button>
+      <button
+        class="uk-button uk-button-primary uk-margin-small-left uk-modal-close"
+        type="button"
+        id="save-position"
+        (click)="uploadFile($event)"
+        [disabled]="isLoading"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div>
+<div id="update-modal" uk-modal>
+  <div class="uk-modal-dialog">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div class="uk-modal-header">
+      <h4>Update Voter</h4>
+    </div>
+    <div class="uk-modal-body">
+      <form [formGroup]="votersForm">
+        <fieldset class="uk-fieldset">
+          <div class="uk-margin">
+            <label for="firstName">Firstname</label>
+
+            <input
+              class="uk-input"
+              type="text"
+              id="firstName"
+              name="firstName"
+              formControlName="firstName"
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                votersForm.controls['firstName'].hasError('required') &&
+                votersForm.controls['firstName'].touched
+              "
+              >Firstname field is required
+            </small>
+          </div>
+          <div class="uk-margin">
+            <label for="lastName">Lastname</label>
+
+            <input
+              class="uk-input"
+              type="text"
+              id="lastName"
+              name="lastName"
+              formControlName="lastName"
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                votersForm.controls['lastName'].hasError('required') &&
+                votersForm.controls['lastName'].touched
+              "
+              >Lastname field is required
+            </small>
+          </div>
+          <div class="uk-margin">
+            <label for="position">Photo</label>
+
+            <!-- <input
+                class="uk-input"
+                type="file"
+                id="photo"
+                name="photo"
+                formControlName="photo"
+              /> -->
+<!-- <div uk-form-custom="target: true">
+              <input
+                type="file"
+                (change)="fileChange($event)"
+                formControlName="file"
+              />
+              <input
+                class="uk-input uk-margin-small-left uk-form-width-medium"
+                type="text"
+                placeholder="Select file"
+                disabled
+              />
+            </div>
+         
+            <small
+              *ngIf="
+                votersForm.controls['file'].hasError('required') &&
+                votersForm.controls['file'].touched
+              "
+              >Please upload a file.</small
+            >
+            <small class="text-danger" *ngIf="!isFileValid"
+              >Invalid file. Must be (jpeg or png)</small
+            >
+          </div>
+          <div class="uk-margin">
+            <label for="email">Contact Number</label>
+
+            <input
+              class="uk-input"
+              type="text"
+              id="contactNumber"
+              name="contactNumber"
+              formControlName="contactNumber"
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                votersForm.controls['contactNumber'].hasError('required') &&
+                votersForm.controls['contactNumber'].touched
+              "
+              >Email field is required
+            </small>
+          </div>
+          <div class="uk-margin">
+            <label for="email">Email</label>
+
+            <input
+              class="uk-input"
+              type="email"
+              id="email"
+              name="email"
+              formControlName="email"
+            />
+            <small
+              class="text-danger"
+              *ngIf="
+                votersForm.controls['email'].hasError('required') &&
+                votersForm.controls['email'].touched
+              "
+              >Email field is required
+            </small>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div class="uk-modal-footer uk-text-right">
+      <button class="uk-button uk-button-default uk-modal-close" type="button">
+        Cancel
+      </button>
+      <button
+        class="uk-button uk-button-primary uk-margin-small-left uk-modal-close"
+        type="button"
+        id="save-position"
+        (click)="updateVoter()"
+        [disabled]="isLoading"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div> -->
+-->

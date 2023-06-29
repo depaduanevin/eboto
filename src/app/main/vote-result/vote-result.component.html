@@ -1,0 +1,51 @@
+<div class="page-wrapper">
+  <div class="title">
+    <div
+      class="uk-card uk-card-default uk-margin-medium-top uk-margin-medium-bottom uk-padding-small uk-text-center"
+    >
+      <h2>
+        <div uk-spinner *ngIf="isLoading"></div>
+        <span *ngIf="!isLoading">{{ title[0]?.title }}</span>
+      </h2>
+    </div>
+  </div>
+  <div
+    class="uk-container uk-container-medium"
+    style="min-height: calc(100vh - 290px)"
+  >
+    <div
+      class="uk-card uk-card-default uk-margin-large-top uk-margin-large-bottom uk-padding-small"
+      style="background-color: white; max-width: 70vw; width: 70vw"
+    >
+      <header class="uk-text-center">
+        <h5>Votes Tally</h5>
+      </header>
+
+      <div
+        class="uk-grid-small uk-child-width-expand@l uk-margin-small-top"
+        uk-grid
+        *ngFor="let position of positions"
+      >
+        <div>
+          <div class="candidates">
+            <dl>
+              <dt>{{ position.description }}</dt>
+              <div class="candidates-item" *ngFor="let candidate of candidates">
+                <dd
+                  [ngClass]="'percentage percentage-' + candidate.votes.length"
+                  *ngIf="candidate.position == position.description"
+                >
+                  <span class="text"
+                    >{{ candidate.candidate }} ({{
+                      candidate.votes.length
+                    }})</span
+                  >
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

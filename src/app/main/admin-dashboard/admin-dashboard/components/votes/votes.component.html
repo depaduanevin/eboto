@@ -1,0 +1,152 @@
+<div class="page-wrapper uk-padding-small">
+  <app-breadcrumb [location]="'Votes'"></app-breadcrumb>
+  <header class="header uk-margin-small-bottom">
+    <h4>Votes</h4>
+  </header>
+
+  <div class="mat-elevation-z1">
+    <div class="table-header uk-padding-small">
+      <div class="table-header-container">
+        <div class="left-table-header">
+          <button class="uk-button uk-button-danger" (click)="reset()">
+            Reset
+          </button>
+        </div>
+        <div class="">
+          <form class="uk-search uk-search-default">
+            <span class="uk-search-icon-flip" uk-search-icon></span>
+            <input class="uk-search-input" type="search" placeholder="Search" />
+          </form>
+          <button
+            class="uk-button uk-button-default uk-margin-small-left"
+            type="button"
+          >
+            Filter
+          </button>
+          <div uk-dropdown class="">
+            <ul class="uk-nav uk-dropdown-nav">
+              <li>
+                <a (click)="filter('')">All</a>
+              </li>
+              <li *ngFor="let position of positions">
+                <a (click)="filter(position.description)">{{
+                  position.description
+                }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="announceSortChange($event)"
+    >
+      <ng-container matColumnDef="position">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by number"
+        >
+          Position
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by name"
+        >
+          Candidate
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.candidate }}</td>
+      </ng-container>
+      <ng-container matColumnDef="votes">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by name"
+        >
+          Votes
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.votes.length }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="buttons" style="display: flex">
+            <button
+              type="button"
+              class="uk-button uk-button-primary uk-margin-small-right"
+              style="padding-inline: 1em"
+            >
+              <span uk-icon="icon: more; ratio: 1"></span>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+    <h4 class="uk-margin-small-top uk-margin-small-left">Abstain</h4>
+    <table
+      mat-table
+      [dataSource]="abstainSource"
+      matSort
+      class="uk-margin-small-top"
+    >
+      <ng-container matColumnDef="position">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by number"
+        >
+          Position
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="count">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by count"
+        >
+          Count
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.count.length }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedAbstainColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedAbstainColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
+  <div class="spinner" *ngIf="isLoading">
+    <span uk-spinner="ratio: 3"></span>
+  </div>
+</div>

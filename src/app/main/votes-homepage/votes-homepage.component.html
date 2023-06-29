@@ -1,0 +1,83 @@
+<header>
+  <div class="uk-container uk-container-medium">
+    <nav class="uk-navbar-container uk-margin" uk-navbar>
+      <div class="uk-navbar-left">
+        <a class="uk-navbar-item uk-logo" href="#"
+          ><img src="assets/eboto.png" height="40px" width="40px" alt=""
+        /></a>
+      </div>
+      <div class="uk-navbar-right">
+        <a [routerLink]="['/voter-login']">LOGIN</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrapper">
+  <div class="title">
+    <div
+      class="uk-card uk-card-default uk-margin-medium-top uk-margin-medium-bottom uk-padding-small uk-text-center"
+    >
+      <h2>
+        <div uk-spinner *ngIf="isLoading"></div>
+        <span *ngIf="!isLoading">{{ title[0]?.title }}</span>
+      </h2>
+    </div>
+  </div>
+  <div
+  *ngIf="!isEnabled"
+    class="uk-container uk-container-medium"
+    style="min-height: calc(100vh - 290px)"
+  >
+    <div
+      class="uk-card uk-card-default uk-margin-large-top uk-margin-large-bottom uk-padding-small"
+      style="background-color: white; max-width: 70vw; width: 70vw"
+    >
+      <div class="uk-text-center">
+        <h5>Votes Tally</h5>
+      </div>
+
+      <div
+        class="uk-grid-small uk-child-width-expand@l uk-margin-small-top"
+        uk-grid
+        *ngFor="let position of positions"
+      >
+        <div>
+          <div class="candidates">
+            <dl>
+              <dt>{{ position.description }}</dt>
+              <div class="candidates-item" *ngFor="let candidate of candidates">
+                <dd
+                  [ngClass]="'percentage percentage-' + candidate.votes.length"
+                  *ngIf="candidate.position == position.description"
+                >
+                  <span class="text"
+                    >{{ candidate.candidate }} ({{
+                      candidate.votes.length
+                    }})</span
+                  >
+                </dd>
+              </div>
+              <div class="candidates-item" *ngFor="let abstain of abstain">
+                <dd 
+                  [ngClass]="'percentage percentage-' + abstain.count.length"
+                  *ngIf="abstain.pid === position.id"
+                >
+                  <span class="text">
+                    Abstain
+                  </span>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="uk-card-header uk-text-center" *ngIf="isEnabled"><h4>Election is still ongoing. The results of the election will be posted here once the voting process concludes.</h4></div>
+</div>
+<app-voters-page-footer>
+  <div class="uk-container uk-container-medium uk-text-center">
+    <h6>E-Boto Voting System</h6>
+  </div>
+</app-voters-page-footer>

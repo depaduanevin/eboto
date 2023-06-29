@@ -1,0 +1,130 @@
+<app-voters-page-header></app-voters-page-header>
+
+<div class="page-wrapper">
+  <div class="title">
+    <div
+      class="uk-card uk-card-default uk-margin-medium-top uk-margin-medium-bottom uk-padding-small uk-text-center"
+    >
+      <h2>
+        <div uk-spinner *ngIf="isLoading"></div>
+        <span *ngIf="!isLoading">{{ title[0]?.title }}</span>
+      </h2>
+    </div>
+  </div>
+  <div
+    class="uk-container uk-container-medium"
+    style="min-height: calc(100vh - 290px)"
+  >
+    <div class="text-wrapper uk-text-center">
+      <h3>Vote Submitted</h3>
+
+      <p>Thanks for using Eboto</p>
+      <!-- <a class="uk-button uk-button-primary" href="#modal-sections" uk-toggle
+        >View Vote Summary</a
+      > -->
+    </div>
+
+    <!-- <div
+      class="uk-card uk-card-default uk-margin-large-top uk-margin-large-bottom uk-padding-small"
+      style="background-color: white; max-width: 70vw; width: 70vw"
+    >
+      <header class="uk-text-center">
+        <h5>Votes Tally</h5>
+      </header>
+
+      <div
+        class="uk-grid-small uk-child-width-expand@l uk-margin-small-top"
+        uk-grid
+        *ngFor="let position of positions"
+      >
+        <div>
+          <div class="candidates">
+            <dl>
+              <dt>{{ position.description }}</dt>
+              <div class="candidates-item" *ngFor="let candidate of candidates">
+                <dd
+                  [ngClass]="'percentage percentage-' + candidate.votes.length"
+                  *ngIf="candidate.position == position.description"
+                >
+                  <span class="text"
+                    >{{ candidate.candidate }} ({{
+                      candidate.votes.length
+                    }})</span
+                  >
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <app-voters-page-footer></app-voters-page-footer>
+</div>
+
+<div id="modal-sections" uk-modal>
+  <div class="uk-modal-dialog uk-width-1-2">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div class="uk-modal-header">
+      <h4>View Vote Summary</h4>
+    </div>
+    <div class="uk-modal-body flex">
+      <div class="container" #content>
+        <div class="user uk-margin-medium-bottom" style="padding-left: 2em">
+          <div class="name">
+            <strong>Name: </strong>
+            <span>{{ user[0]?.firstName + " " + user[0]?.lastName }}</span>
+          </div>
+          <div class="name">
+            <strong>Sr Code: </strong>
+            <span>{{ user[0]?.srCode }}</span>
+          </div>
+          <div class="name">
+            <strong>Voter Id: </strong>
+            <span>{{ user[0]?.voterId }}</span>
+          </div>
+        </div>
+        <h3 class="uk-text-center">
+          <div uk-spinner *ngIf="isLoading"></div>
+          <span *ngIf="!isLoading">{{ title[0]?.title }}</span>
+        </h3>
+
+        <ul class="vote-list">
+          <li class="list-item my-2" *ngFor="let position of positions">
+            <div *ngIf="hidePosition(position.description)">
+              <h4>{{ position.description }}</h4>
+              <div class="candidate" *ngFor="let candidate of voteSummary">
+                <div *ngIf="candidate.position == position.description">
+                  {{ candidate.candidate }}
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <ul class="vote-list">
+          <li class="list-item my-2">
+            <h4>Abstain Position(s)</h4>
+            <div class="candidate" *ngFor="let abstain of filteredAbstain">
+              <div>
+                {{ abstain.description }}
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="uk-modal-footer uk-text-right">
+      <button class="uk-button uk-button-default uk-modal-close" type="button">
+        Cancel
+      </button>
+      <button
+        class="uk-button uk-button-primary uk-margin-small-left"
+        type="button"
+        (click)="generatePdf()"
+      >
+        Generate Pdf
+      </button>
+    </div>
+  </div>
+</div>

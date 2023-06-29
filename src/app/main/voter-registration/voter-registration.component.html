@@ -1,0 +1,195 @@
+<div class="page-wrapper">
+  <div
+    class="uk-container uk-container-expand d-grid"
+    style="min-height: 100vh"
+  >
+    <div class="uk-card uk-card-default uk-width-1-2">
+      <div class="uk-card-body">
+        <form [formGroup]="votersForm">
+          <fieldset class="uk-fieldset">
+            <legend class="uk-legend uk-text-center">
+              <img src="assets/eboto.png" height="12%" width="12%" alt="" />
+            </legend>
+            <div class="uk-margin uk-text-center">
+              <small style="font-weight: 600">Register as a Voter</small>
+            </div>
+            <div class="uk-margin">
+              <label for="firstName">Firstname</label>
+
+              <input
+                class="uk-input"
+                type="text"
+                id="firstName"
+                name="firstName"
+                formControlName="firstName"
+              />
+              <small
+                class="text-danger"
+                *ngIf="
+                  votersForm.controls['firstName'].hasError('required') &&
+                  votersForm.controls['firstName'].touched
+                "
+                >Firstname field is required
+              </small>
+            </div>
+            <div class="uk-margin">
+              <label for="lastName">Lastname</label>
+
+              <input
+                class="uk-input"
+                type="text"
+                id="lastName"
+                name="lastName"
+                formControlName="lastName"
+              />
+              <small
+                class="text-danger"
+                *ngIf="
+                  votersForm.controls['lastName'].hasError('required') &&
+                  votersForm.controls['lastName'].touched
+                "
+                >Lastname field is required
+              </small>
+            </div>
+            <div class="uk-margin">
+              <label for="position">Photo</label>
+
+              <!-- <input
+                  class="uk-input"
+                  type="file"
+                  id="photo"
+                  name="photo"
+                  formControlName="photo"
+                /> -->
+              <div uk-form-custom="target: true">
+                <input
+                  type="file"
+                  (change)="fileChange($event)"
+                  formControlName="file"
+                />
+                <input
+                  class="uk-input uk-margin-small-left uk-form-width-medium"
+                  type="text"
+                  placeholder="Select file"
+                  disabled
+                />
+              </div>
+              <!-- <small
+                  class="text-danger"
+                  *ngIf="
+                    votersForm.controls['photo'].hasError('required') &&
+                    votersForm.controls['photo'].touched
+                  "
+                  >Photo is required
+                </small> -->
+              <small
+                *ngIf="
+                  votersForm.controls['file'].hasError('required') &&
+                  votersForm.controls['file'].touched
+                "
+                >Please upload a file.</small
+              >
+              <small class="text-danger" *ngIf="!isFileValid"
+                >Invalid file. Must be (jpeg or png)</small
+              >
+            </div>
+            <div class="uk-margin">
+              <label for="email">Contact Number</label>
+
+              <input
+                class="uk-input"
+                type="text"
+                id="contactNumber"
+                name="contactNumber"
+                formControlName="contactNumber"
+              />
+              <small
+                class="text-danger"
+                *ngIf="
+                  votersForm.controls['contactNumber'].hasError('required') &&
+                  votersForm.controls['contactNumber'].touched
+                "
+                >Email field is required
+              </small>
+            </div>
+            <div class="uk-margin">
+              <label for="email">Email</label>
+
+              <input
+                class="uk-input"
+                type="email"
+                id="email"
+                name="email"
+                formControlName="email"
+              />
+              <small
+                class="text-danger"
+                *ngIf="
+                  votersForm.controls['email'].hasError('required') &&
+                  votersForm.controls['email'].touched
+                "
+                >Email field is required
+              </small>
+            </div>
+            <div class="uk-margin">
+              <label for="email">Sr Code</label>
+
+              <input
+                class="uk-input"
+                type="text"
+                id="srCode"
+                name="srCode"
+                formControlName="srCode"
+              />
+              <small
+                class="text-danger"
+                *ngIf="
+                  votersForm.controls['srCode'].hasError('required') &&
+                  votersForm.controls['srCode'].touched
+                "
+                >Sr Code field is required
+              </small>
+            </div>
+
+            <div class="uk-margin">
+              <label for="password">Voter's Password</label>
+
+              <input
+                class="uk-input"
+                type="password"
+                id="password"
+                name="password"
+                formControlName="password"
+              />
+              <small
+                class="text-danger"
+                *ngIf="
+                  votersForm.controls['password'].hasError('required') &&
+                  votersForm.controls['password'].touched
+                "
+                >Password field is required
+              </small>
+            </div>
+            <div class="uk-margin">
+              <button
+                type="button"
+                class="uk-button btn-red uk-width-1-1"
+                (click)="uploadFile($event)"
+                [disabled]="isLoading"
+              >
+                <div *ngIf="isLoading" uk-spinner></div>
+                {{ !isLoading ? "Register" : "" }}
+              </button>
+            </div>
+            <div class="uk-text-center">
+              <p>
+                Already a voter? Click
+                <a href="" routerLink="/voter-login">here.</a>
+              </p>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

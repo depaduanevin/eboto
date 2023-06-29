@@ -1,0 +1,54 @@
+<header>
+  <div class="uk-container uk-container-medium">
+    <nav class="uk-navbar-container uk-margin" uk-navbar>
+      <div class="uk-navbar-left">
+        <a class="uk-navbar-item uk-logo" href="#"
+          ><img src="assets/eboto.png" height="40px" width="40px" alt=""
+        /></a>
+      </div>
+      <div class="uk-navbar-right">
+        <button class="uk-button clear-btn" type="button">
+          {{ userData[0]?.username }}
+          <span class="uk-margin-small-left" uk-icon="chevron-down"></span>
+        </button>
+        <div uk-dropdown>
+          <ul class="uk-nav uk-dropdown-nav">
+            <li><a href="#update-password" uk-toggle>Update Password</a></li>
+            <li class="uk-nav-divider"></li>
+            <li><a (click)="logOut()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div id="update-password" uk-modal>
+  <div class="uk-modal-dialog">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div class="uk-modal-header">
+      <h4>Update Password</h4>
+    </div>
+    <div class="uk-modal-body">
+      Do you want to update your Password?
+      <br />
+      <small
+        ><strong>Note:</strong>If you didn't find the password reset email in
+        you inbox, please check your <strong>spam</strong> emails.</small
+      >
+    </div>
+    <div class="uk-modal-footer uk-text-right">
+      <button class="uk-button uk-button-default uk-modal-close" type="button">
+        Cancel
+      </button>
+      <button
+        class="uk-button uk-button-primary uk-margin-small-left uk-modal-close"
+        type="button"
+        id="save-position"
+        (click)="updatePassword()"
+      >
+        Yes
+      </button>
+    </div>
+  </div>
+</div>

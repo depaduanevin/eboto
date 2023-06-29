@@ -1,0 +1,86 @@
+<div class="page-wrapper">
+  <div class="uk-container uk-container-expand d-grid" style="height: 100vh">
+    <div class="uk-card uk-card-default uk-width-1-3">
+      <div class="uk-card-body">
+        <form [formGroup]="loginForm">
+          <fieldset class="uk-fieldset">
+            <legend class="uk-legend uk-text-center">
+              <img src="assets/eboto.png" height="12%" width="12%" alt="" />
+            </legend>
+            <div class="uk-margin uk-text-center">
+              <small style="font-weight: 600"
+                >Login to start to start the session</small
+              >
+            </div>
+
+            <div class="uk-margin d-flex">
+              <div class="input-icon">
+                <div class="icon">
+                  <span uk-icon="icon: user; ratio: 1"></span>
+                </div>
+                <input
+                  class="uk-input"
+                  type="text"
+                  placeholder="Admin Username"
+                  formControlName="votersId"
+                />
+              </div>
+              <small
+                class="uk-text-danger"
+                *ngIf="
+                  loginForm.controls['votersId'].hasError('required') &&
+                  loginForm.controls['votersId'].touched
+                "
+                >Please fill up the field</small
+              >
+            </div>
+            <div class="uk-margin d-flex">
+              <div class="input-icon">
+                <div class="icon">
+                  <span uk-icon="icon: lock; ratio: 1"></span>
+                </div>
+
+                <input
+                  #input
+                  class="uk-input"
+                  type="password"
+                  placeholder="Admin Password"
+                  formControlName="password"
+                />
+              </div>
+              <small
+                class="uk-text-danger"
+                *ngIf="
+                  loginForm.controls['password'].hasError('required') &&
+                  loginForm.controls['password'].touched
+                "
+                >Please fill up the field</small
+              >
+            </div>
+            <div class="uk-margin">
+              <label
+                ><input
+                  class="uk-checkbox"
+                  type="checkbox"
+                  (click)="showPassword(input)"
+                />
+                Show Password</label
+              >
+            </div>
+            <div class="uk-margin">
+              <button
+                type="button"
+                class="uk-button btn-red uk-width-1-1"
+                (click)="onSubmit()"
+                [disabled]="isLoading"
+              >
+                <div *ngIf="isLoading" uk-spinner></div>
+                {{ !isLoading ? "Login" : "" }}
+              </button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<app-voters-page-header></app-voters-page-header>
+
+<div class="page-wrapper">
+    <div class="spinner" *ngIf="isLoading">
+        <span uk-spinner="ratio: 3"></span>
+    </div>
+    <div class="title">
+        <div
+            class="uk-card uk-card-default uk-margin-medium-top uk-margin-medium-bottom uk-padding-small uk-text-center"
+        >
+            <h2>
+                <div uk-spinner *ngIf="isLoading"></div>
+                <span *ngIf="!isLoading">{{ title[0]?.title }}</span>
+            </h2>
+        </div>
+        <div class="uk-container uk-container-medium" *ngIf="!isLoading">
+            <p class="information uk-margin-medium-bottom">
+                {{ title[0]?.information }}
+            </p>
+        </div>
+        <div class="uk-container uk-container-medium uk-margin-medium-bottom buttons" *ngIf="!isLoading">
+            <button routerLink="/candidate-info" class="uk-button uk-button-primary uk-margin-small-right">Check candidate information</button>
+            <button 
+                class="uk-button uk-button-secondary uk-margin-small-right"
+                (click)="goToVote()"
+            >proceed to voting anyway
+            </button>
+        </div>
+    </div>
+    <app-voters-page-footer></app-voters-page-footer>
+</div>

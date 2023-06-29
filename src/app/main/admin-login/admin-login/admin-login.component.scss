@@ -1,0 +1,41 @@
+.page-wrapper{
+    min-height: 100vh;
+    background: #efefef;
+
+  
+
+    .input-icon{
+        display: flex;
+        align-items: center;
+
+        .icon{
+            border-left: 1px solid #e8e8e8;
+            border-top: 1px solid #e8e8e8;
+
+            border-bottom: 1px solid #e8e8e8;
+            background-color: #efefef;
+            height: 38px;
+            display: grid;
+            place-items: center;
+        }
+        span{
+            margin-inline: 10px;
+
+        }
+        input{}
+
+    }
+
+    
+}
+.d-grid{
+    display: grid;
+    place-items: center;
+}
+
+
+
+
+    
+
+

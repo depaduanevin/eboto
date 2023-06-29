@@ -1,0 +1,47 @@
+.page-wrapper{
+    min-height: 100vh;
+    background:linear-gradient(rgba(255, 255, 255, 0.695),rgba(255, 255, 255, 0.7)), url('/assets/loginbg.png') ;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    padding-block: 3em;
+
+  
+
+    .input-icon{
+        display: flex;
+        align-items: center;
+
+        .icon{
+            border-left: 1px solid #e8e8e8;
+            border-top: 1px solid #e8e8e8;
+
+            border-bottom: 1px solid #e8e8e8;
+            background-color: #efefef;
+            height: 38px;
+            display: grid;
+            place-items: center;
+        }
+        span{
+            margin-inline: 10px;
+
+        }
+        input{}
+
+    }
+
+    
+}
+.d-grid{
+    display: grid;
+    place-items: center;
+}
+
+
+
+
+    
+
+

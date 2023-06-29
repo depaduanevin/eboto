@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "eboto-votingsystem": {
+      "hosting": {
+        "voting-frontend": [
+          "eboto-votingsystem"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "eboto-votingsystem"
+  }
+}

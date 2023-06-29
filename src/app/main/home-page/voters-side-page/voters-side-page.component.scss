@@ -1,0 +1,61 @@
+
+h1,h2,h3,h4,h5{
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    text-transform: capitalize;
+}
+.page-wrapper{
+    padding-top: 80px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background:linear-gradient(rgba(255, 255, 255, 0.695),rgba(255, 255, 255, 0.7)), url('/assets/loginbg.png') ;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+}
+
+
+.content{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+.candidate-content{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.candidates{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    .d-none{
+        display: none;
+    }
+    .reset-btn{
+       
+        display: flex;
+        align-items:center ;
+    }
+
+    .candidate-item{
+        display: flex;
+        align-items: center;
+
+
+        &>*+*{
+            margin-left: 30px;
+        }
+    }
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}

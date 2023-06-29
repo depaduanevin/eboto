@@ -1,0 +1,57 @@
+<app-voters-page-header></app-voters-page-header>
+
+<div class="page-wrapper">
+    <div
+      class="uk-card uk-card-default uk-margin-medium-top uk-margin-medium-bottom uk-padding-small uk-text-center"
+    >
+      <h2>
+        <div uk-spinner *ngIf="isLoading"></div>
+        <span *ngIf="!isLoading">{{ title[0]?.title }}</span>
+      </h2>
+    </div>
+    <div class="uk-container-medium">
+        <div 
+          class="uk-card uk-card-default uk-margin-medium-bot" 
+          *ngFor="let position of positions"
+          style="margin: 1.5em"
+        >
+            <div class="uk-card-header" style="padding: 1.5em">
+                <h4>{{ position.description }}</h4>
+            </div>
+            <div class="uk-card-body" style="padding: 1.5em"  >
+                <div 
+                 class="candidates" 
+                 *ngFor="let candidate of candidates"
+                >
+                    <div class="candidate-content" *ngIf="candidate.position == position.description">
+                        <div uk-lightbox>
+                            <a href="{{ candidate.photoUrl }}">
+                                <img
+                                    src="{{ candidate.photoUrl }}"
+                                    height="100px"
+                                    width="90px"
+                                    style="aspect-ratio: 1"
+                                    alt=""
+                                />
+                            </a>
+                        </div>
+                        <div class="text-wrapper uk-margin-medium-left candidate-info" >
+                            <h3>{{ candidate.lastName }}, {{ candidate.firstName }}</h3>
+                            <small>{{ candidate.platform }}</small>
+                            <p>{{ candidate.information ? candidate.information : 'No information available'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="buttons uk-margin-medium-bottom">
+        <button 
+            class="uk-button uk-button-secondary uk-margin-small-right"
+            (click)="goToVote()"
+        >proceed to voting
+        </button>
+    </div>
+    
+</div>

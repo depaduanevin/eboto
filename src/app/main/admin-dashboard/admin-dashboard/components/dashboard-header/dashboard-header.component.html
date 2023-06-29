@@ -1,0 +1,21 @@
+<header class="navbar">
+  <div class="uk-container uk-container-expand">
+    <nav class="nav">
+      <div class="nav-left">
+        <a href="/admin-dashboard">
+          <img src="assets/eboto.png" height="30px" width="30px" alt="" />
+        </a>
+      </div>
+
+      <div class="nav-right">
+        <button class="uk-button clear-btn" type="button">Admin <span class="uk-margin-small-left" uk-icon="chevron-down"></span></button>
+        <div uk-dropdown>
+          <ul class="uk-nav uk-dropdown-nav">
+            <li class="uk-nav-divider"></li>
+            <li><a (click)="logOut()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
