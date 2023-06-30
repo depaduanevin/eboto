@@ -1,3 +1,5 @@
+![ourheader](https://github.com/thatguynevs/eboto/blob/master/src/education.png?raw=true)
+
 # E-Boto: An Online Voting System
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
 
