@@ -1,5 +1,4 @@
 # E-Boto: An Online Voting System
-Access here: https://www.eboto-votingsystem.com/voter-login
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
 
 ## Development server
